@@ -2,9 +2,14 @@
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 /*
@@ -18,6 +23,19 @@ import javax.swing.JFrame;
  * @author sampath
  */
 public class JumbledImage extends Component{
+    
+    private BufferedImage bi;
+    int w, h, cw, ch;
+    
+    public JumbledImage(URL imageSrc){
+        try {
+            bi = ImageIO.read(imageSrc);
+            w = bi.getWidth(null);
+            h = bi.getHeight(null);
+        } catch (IOException ex) {
+            Logger.getLogger(JumbledImage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
     
