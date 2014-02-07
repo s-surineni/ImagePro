@@ -1,5 +1,7 @@
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -7,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -26,6 +29,9 @@ public class JumbledImage extends Component{
     
     private BufferedImage bi;
     int w, h, cw, ch;
+    private int numlocs = 2;
+    private int numcells = numlocs*numlocs;
+    private int[] cells;
     
     public JumbledImage(URL imageSrc){
         try {
@@ -35,20 +41,44 @@ public class JumbledImage extends Component{
         } catch (IOException ex) {
             Logger.getLogger(JumbledImage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        cw=w/numlocs;//width divided by number of parts to divide in width
+        //column width
+        ch = h/numlocs;//column height
+        cells = new int[numcells];
+        for (int i=0;i<numcells;i++) {
+            cells[i] = i;
+        }
     }
     
-    
-    
-    public static void main(String[] args){
-        JFrame f = new JFrame("Jumbled Image");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {System.exit(0);}
-        });
-        URL imageSrc = null;
-        try {
-             imageSrc = ((new File(imageFileName)).toURI()).toURL();
-        } catch (MalformedURLException e) {
+    void jumble() {
+        Random rand = new Random();
+        int ri;
+        for (int i=0; i<numcells; i++) {
+            while ((ri = rand.nextInt(numlocs)) == i);
+ 
+            int tmp = cells[i];
+            cells[i] = cells[ri];
+            cells[ri] = tmp;
         }
+    }
+    
+    public Dimension getPreferredSize() {
+        return new Dimension(w, h);
+    }
+    
+    public void paint(Graphics g){
+        int dx,dy;
+        for(int x=0;x<numlocs;x++){
+            int sx = x * cw; //starting position of x
+            for (int y = 0; y < numlocs; y++) {
+                
+                int sy=y*ch;
+                int cell = cells[x*numlocs+y];
+                
+            }
+        }
+        
     }
     
 }

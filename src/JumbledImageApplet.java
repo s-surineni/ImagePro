@@ -1,4 +1,7 @@
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -32,6 +35,14 @@ public class JumbledImageApplet extends JApplet{
         final JumbledImage ji = new JumbledImage(imageSrc);
         add("Center", ji);
         JButton jumbleButton = new JButton("Jumble");
+        jumbleButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    JButton b = (JButton)e.getSource();
+                    ji.jumble();
+                    ji.repaint();
+                };
+            });
+        Dimension jumbleSize = ji.getPreferredSize();
     }
     
     public static void main(String[] args){
