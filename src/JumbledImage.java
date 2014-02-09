@@ -28,7 +28,7 @@ import javax.swing.JFrame;
 public class JumbledImage extends Component{
     
     private BufferedImage bi;
-    int w, h, cw, ch;
+    int w, h, cw, ch;//w,h are width and height of the image
     private int numlocs = 2;
     private int numcells = numlocs*numlocs;
     private int[] cells;
@@ -67,18 +67,24 @@ public class JumbledImage extends Component{
         return new Dimension(w, h);
     }
     
-    public void paint(Graphics g){
-        int dx,dy;
-        for(int x=0;x<numlocs;x++){
-            int sx = x * cw; //starting position of x
-            for (int y = 0; y < numlocs; y++) {
-                
-                int sy=y*ch;
+    
+    public void paint(Graphics g) {
+ 
+        int dx, dy;
+        for (int x=0; x<numlocs; x++) {
+            int sx = x*cw;
+            for (int y=0; y<numlocs; y++) {
+                int sy = y*ch;
                 int cell = cells[x*numlocs+y];
-                
+                dx = (cell / numlocs) * cw;
+                dy = (cell % numlocs) * ch;
+                g.drawImage(bi,
+                            dx, dy, dx+cw, dy+ch,
+                            sx, sy, sx+cw, sy+ch,
+                            null);
             }
         }
-        
     }
-    
 }
+    
+

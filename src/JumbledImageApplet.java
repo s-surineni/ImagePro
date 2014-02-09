@@ -23,8 +23,9 @@ import javax.swing.JFrame;
  */
 public class JumbledImageApplet extends JApplet{
     
-    static String imageFileName = "examples/duke_skateboard.jpg";
+    static String imageFileName = "duke_skateboard.jpg";
     private URL imageSrc;
+    private JumbledImage jumbledImage;
     
     public JumbledImageApplet (URL imageSrc) {
         this.imageSrc = imageSrc;
@@ -43,6 +44,8 @@ public class JumbledImageApplet extends JApplet{
                 };
             });
         Dimension jumbleSize = ji.getPreferredSize();
+        resize(jumbleSize.width, jumbleSize.height+40);
+        add("South", jumbleButton);
     }
     
     public static void main(String[] args){
@@ -58,6 +61,9 @@ public class JumbledImageApplet extends JApplet{
         }
         JumbledImageApplet jumbler = new JumbledImageApplet(imageSrc);
         jumbler.buildUI();
+        f.add("Center", jumbler);
+        f.pack();
+        f.setVisible(true);
     }
     
 }
